@@ -14,7 +14,7 @@
       <% num = 1 %>
       <% @forum_comments.each do |forum_comment| %>
         <li id="forum_comment-<%= forum_comment.id %>">
-          <span class="user"><%= num %><%= link_to forum_comment.user.name, forum_comment.user %></span>
+          <span class="user"><%= _num = params[:page] ? num + (params[:page].to_i - 1) * 30 : num %><%= link_to forum_comment.user.name, forum_comment.user %></span>
           <span class="content"><%= forum_comment.body %></span>
           <span class="timestamp">
             Posted <%= time_ago_in_words(forum_comment.created_at) %> ago.
@@ -22,6 +22,7 @@
               <%= link_to "delete", forum_comment, method: :delete, data: { confirm: "You sure?" } %>
             <% end %>
           </span>
+          <span class="content"><a href="#form" onClick="document.getElementById('forum_comment_body').value = '<%= ">>[" +  _num.to_s + "]" %>' ">返信</a></span>
         </li>
         <% num += 1 %>
       <% end %>
@@ -29,7 +30,9 @@
       <%= will_paginate @forum_comments %>
     <% end %>
     <section class="micropost_form">
-      <%= render 'comment_form' %>
+      <div id="form">
+        <%= render 'comment_form' %>
+      </div>
     </section>
   </div>
 </div>
