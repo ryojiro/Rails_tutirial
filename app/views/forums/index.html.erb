@@ -1,0 +1,15 @@
+<% provide(:title, 'Forums') %>
+<h1>All forums</h1>
+<% if logged_in? %>
+  <%= link_to "Create forum", new_forum_path, class: "btn btn-lg btn-primary" %>
+  <br>
+<% end %>
+
+<%= will_paginate %>
+
+<ul class="users">
+  <%= render @forums %>
+</ul>
+
+<%= will_paginate %>
+

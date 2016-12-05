@@ -1,0 +1,7 @@
+<li>
+  <%= link_to forum.title, forum %>
+  <% if logged_in? && current_user.admin? %>
+    | <%= link_to "delete", forum, method: :delete, data: { confirm: "You sure?" } %>
+  <% end %>
+</li>
+

@@ -26,6 +26,21 @@ users = User.order(:created_at).take(6)
   users.each { |user| user.microposts.create!(content: content) }
 end
 
+# forums
+99.times do |n|
+  Forum.create!(title: Faker::Lorem.sentence(5),
+                user_id: n+1)
+end
+
+# forum_comments
+forums = Forum.order(:created_at).take(6)
+50.times do |n|
+  body = Faker::Lorem.sentence(5)
+  forums.each { |forum| forum.forum_comments.create!(body: body,
+                                                user_id: n+1,
+                                                forum_id: n+1) }
+end
+
 # リレーションシップ
 users = User.all
 user  = users.first
