@@ -1,3 +1,9 @@
+<script type="text/javascript">
+  function reply(_num) {
+    document.getElementById('forum_comment_body').value = ">>[" +  _num + "]";
+  }
+</script>
+
 <% provide(:title, @forum.title) %>
 <div class="row">
   <aside class="col-md-4">
@@ -22,7 +28,7 @@
               <%= link_to "delete", forum_comment, method: :delete, data: { confirm: "You sure?" } %>
             <% end %>
           </span>
-          <span class="content"><a href="#form" onClick="document.getElementById('forum_comment_body').value = '<%= ">>[" +  _num.to_s + "]" %>' ">返信</a></span>
+          <span class="content"><a href="#form" onClick="reply(<%= _num %>)">返信</a></span>
         </li>
         <% num += 1 %>
       <% end %>
