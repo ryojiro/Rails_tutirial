@@ -6,39 +6,39 @@
 
 <% provide(:title, @forum.title) %>
 <div class="row">
-    <aside class="col-md-4">
-      <section>
-        <h1>
-          <%= @forum.title %>
-        </h1>
-      </section>
-    </aside>
-    <div class="col-md-8">
-      <% if @forum.forum_comments.any? %>
-          <h3>Comments (<%= @forum.forum_comments.count %>)</h3>
-      <ol class="microposts">
-        <% num = 1 %>
-        <% @forum_comments.each do |forum_comment| %>
-            <li id="forum_comment-<%= forum_comment.id %>">
-            <span class="user"><%= _num = params[:page] ? num + (params[:page].to_i - 1) * 30 : num %><%= link_to forum_comment.user.name, forum_comment.user %></span>
-            <span class="content"><%= forum_comment.body %></span>
-            <span class="timestamp">
-              Posted <%= time_ago_in_words(forum_comment.created_at) %> ago.
-              <% if logged_in? && current_user.admin? %>
-                  <%= link_to "delete", forum_comment, method: :delete, data: { confirm: "You sure?" } %>
-              <% end %>
-            </span>
-            <span class="content"><a href="#form" onClick="reply(<%= _num %>)">返信</a></span>
-          </li>
-          <% num += 1 %>
-        <% end %>
-      </ol>
-        <%= will_paginate @forum_comments %>
+  <aside class="col-md-4">
+    <section>
+      <h1>
+        <%= @forum.title %>
+      </h1>
+    </section>
+  </aside>
+  <div class="col-md-8">
+    <% if @forum.forum_comments.any? %>
+      <h3>Comments (<%= @forum.forum_comments.count %>)</h3>
+    <ol class="microposts">
+      <% num = 1 %>
+      <% @forum_comments.each do |forum_comment| %>
+        <li id="forum_comment-<%= forum_comment.id %>">
+          <span class="user"><%= _num = params[:page] ? num + (params[:page].to_i - 1) * 30 : num %><%= link_to forum_comment.user.name, forum_comment.user %></span>
+          <span class="content"><%= forum_comment.body %></span>
+          <span class="timestamp">
+            Posted <%= time_ago_in_words(forum_comment.created_at) %> ago.
+            <% if logged_in? && current_user.admin? %>
+              <%= link_to "delete", forum_comment, method: :delete, data: { confirm: "You sure?" } %>
+            <% end %>
+          </span>
+          <span class="content"><a href="#form" onClick="reply(<%= _num %>)">返信</a></span>
+        </li>
+        <% num += 1 %>
       <% end %>
-      <section class="micropost_form">
-        <div id="form">
-          <%= render 'comment_form' %>
-        </div>
-      </section>
-    </div>
+    </ol>
+      <%= will_paginate @forum_comments %>
+    <% end %>
+    <section class="micropost_form">
+      <div id="form">
+        <%= render 'comment_form' %>
+      </div>
+    </section>
   </div>
+</div>
